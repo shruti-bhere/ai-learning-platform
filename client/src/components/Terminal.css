@@ -1,0 +1,122 @@
+.terminal-container {
+  background: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  font-family: 'Courier New', monospace;
+}
+
+.terminal-header {
+  background: #252526;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #3e3e42;
+}
+
+.terminal-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cccccc;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.terminal-icon {
+  font-size: 16px;
+}
+
+.clear-button {
+  background: transparent;
+  color: #cccccc;
+  border: 1px solid #3e3e42;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.clear-button:hover {
+  background: #3e3e42;
+  color: white;
+}
+
+.terminal-body {
+  padding: 16px;
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.terminal-line {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.terminal-prompt {
+  color: #4ec9b0;
+  margin-right: 8px;
+  user-select: none;
+}
+
+.terminal-command {
+  color: #d4d4d4;
+  flex: 1;
+}
+
+.terminal-output {
+  color: #d4d4d4;
+  white-space: pre-wrap;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  font-family: 'Courier New', monospace;
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #d4d4d4;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  outline: none;
+  padding: 0;
+}
+
+.terminal-input::placeholder {
+  color: #6a6a6a;
+}
+
+/* Scrollbar styling */
+.terminal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 4px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+  background: #4e4e4e;
+}
+

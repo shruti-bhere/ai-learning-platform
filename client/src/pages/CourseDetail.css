@@ -1,0 +1,173 @@
+.course-header {
+  margin-bottom: 40px;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 20px;
+  transition: background 0.3s ease;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.course-title-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: white;
+}
+
+.course-icon-large {
+  font-size: 80px;
+}
+
+.course-title-section h1 {
+  font-size: 48px;
+  margin-bottom: 12px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.course-description-large {
+  font-size: 20px;
+  opacity: 0.9;
+}
+
+.lessons-section {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.lessons-section h2 {
+  color: #333;
+  margin-bottom: 24px;
+  font-size: 28px;
+}
+
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lesson-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.lesson-item:hover {
+  background: #e9ecef;
+  border-left-color: #0f9d58;
+  transform: translateX(5px);
+}
+
+.lesson-item.completed {
+  background: #d1fae5;
+  border-left-color: #10b981;
+}
+
+.lesson-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fdf8ee 0%, #f2f7f1 100%);
+  color: #0b5132;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.lesson-item.completed .lesson-number {
+  background: #10b981;
+}
+
+.lesson-content {
+  flex: 1;
+}
+
+.lesson-content h3 {
+  color: #333;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.lesson-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.difficulty-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.lesson-time {
+  color: #666;
+  font-size: 14px;
+}
+
+.completed-badge {
+  color: #10b981;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.lesson-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.lesson-progress .progress-bar {
+  flex: 1;
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.lesson-progress .progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0f9d58 0%, #0c7a48 100%);
+  transition: width 0.3s ease;
+}
+
+.lesson-progress span {
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+  min-width: 45px;
+}
+
+.lesson-arrow {
+  font-size: 24px;
+  color: #0f9d58;
+  font-weight: bold;
+}
+

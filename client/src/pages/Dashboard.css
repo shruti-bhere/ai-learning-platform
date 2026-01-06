@@ -1,0 +1,45 @@
+.dashboard h1 {
+  color: white;
+  margin-bottom: 30px;
+}
+
+.topics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.topic-item {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #0f9d58;
+}
+
+.topic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.topic-header h3 {
+  color: #333;
+  font-size: 20px;
+}
+
+.progress-percentage {
+  font-weight: bold;
+  color: #0f9d58;
+  font-size: 18px;
+}
+
+.topic-actions {
+  margin-top: 12px;
+}
+
+.topic-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+

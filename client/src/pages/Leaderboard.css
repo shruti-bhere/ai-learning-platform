@@ -1,0 +1,42 @@
+.leaderboard-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.filter-btn {
+  padding: 12px 24px;
+  border: 2px solid #0f9d58;
+  background: white;
+  color: #0f9d58;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  background: #f0f0f0;
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #fdf8ee 0%, #f2f7f1 100%);
+  color: #0b5132;
+  border-color: transparent;
+}
+
+.rank-1 {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  font-weight: bold;
+}
+
+.rank-2 {
+  background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+  font-weight: bold;
+}
+
+.rank-3 {
+  background: linear-gradient(135deg, #cd7f32 0%, #e6a857 100%);
+  font-weight: bold;
+}
+

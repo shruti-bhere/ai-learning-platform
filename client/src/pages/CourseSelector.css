@@ -1,0 +1,89 @@
+.course-selector-header {
+  text-align: center;
+  margin-bottom: 40px;
+  color: white;
+}
+
+.course-selector-header h1 {
+  font-size: 42px;
+  margin-bottom: 12px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.course-selector-header p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.course-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: #0f9d58;
+}
+
+.course-icon {
+  font-size: 64px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.course-card h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.course-description {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: center;
+  min-height: 48px;
+}
+
+.course-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #666;
+}
+
+.course-stats .completed {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.course-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.course-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0f9d58 0%, #0c7a48 100%);
+  transition: width 0.3s ease;
+}
+

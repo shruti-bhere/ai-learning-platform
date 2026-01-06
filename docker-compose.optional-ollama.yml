@@ -1,0 +1,20 @@
+# Alternative docker-compose file WITHOUT Ollama
+# Use this if you want to skip AI analysis and use only static analysis
+# Usage: docker compose -f docker-compose.yml -f docker-compose.optional-ollama.yml up
+
+services:
+  ollama:
+    profiles:
+      - ollama  # Only start if explicitly requested
+    image: ollama/ollama:latest
+    container_name: learning-platform-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: on-failure
+
+  code-analysis:
+    depends_on:
+      - ollama
+    # Remove health check dependency so it starts even without Ollama

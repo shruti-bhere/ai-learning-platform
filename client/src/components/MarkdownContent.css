@@ -1,0 +1,290 @@
+.markdown-content {
+  line-height: 1.8;
+  color: #1f2937;
+  font-size: 16px;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.markdown-content h1 {
+  font-size: 30px;
+  margin: 28px 0 16px 0;
+  color: #0b5132;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #d9f0e1;
+}
+
+.markdown-content h2 {
+  font-size: 24px;
+  margin: 24px 0 14px 0;
+  color: #0b5132;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.markdown-content h3 {
+  font-size: 20px;
+  margin: 20px 0 12px 0;
+  color: #14532d;
+  font-weight: 700;
+}
+
+.markdown-content h4 {
+  font-size: 18px;
+  margin: 18px 0 10px 0;
+  color: #166534;
+  font-weight: 600;
+}
+
+.markdown-content p {
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #1f2937;
+  line-height: 1.8;
+}
+
+.markdown-content p:first-of-type {
+  font-size: 17px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.markdown-content code {
+  background: #f1f5f3;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 14px;
+  color: #0f9d58;
+  font-weight: 600;
+  border: 1px solid #d9f0e1;
+}
+
+/* Don't highlight syntax patterns in regular text */
+.markdown-content p code {
+  /* Only highlight actual code keywords, not syntax descriptions */
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Visible selection highlighting inside markdown content */
+.markdown-content *::selection {
+  background: #cce4ff;
+  color: inherit;
+}
+
+.markdown-content *::-moz-selection {
+  background: #cce4ff;
+  color: inherit;
+}
+
+.markdown-content ul, .markdown-content ol {
+  margin: 18px 0;
+  padding-left: 26px;
+}
+
+.markdown-content li {
+  margin-bottom: 10px;
+  margin-left: 4px;
+  color: #1f2937;
+  font-size: 16px;
+  line-height: 1.7;
+  padding-left: 6px;
+}
+
+.markdown-content li::marker {
+  color: #0f9d58;
+  font-weight: 700;
+}
+
+.markdown-content strong {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 16px;
+}
+
+.markdown-content em {
+  font-style: italic;
+  color: #374151;
+}
+
+.markdown-content blockquote {
+  margin: 20px 0;
+  padding: 14px 16px;
+  background: #f7fcf9;
+  border-left: 4px solid #0f9d58;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #14532d;
+}
+
+/* Code Block with Actions */
+.code-block-container {
+  margin: 20px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  background: #1e1e1e;
+}
+
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: #252526;
+  border-bottom: 1px solid #3e3e42;
+}
+
+.code-block-language {
+  font-size: 12px;
+  font-weight: 600;
+  color: #cccccc;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.code-block-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.code-action-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.copy-button {
+  background: #3e3e42;
+  color: #cccccc;
+}
+
+.copy-button:hover {
+  background: #4e4e4e;
+  color: white;
+}
+
+.run-button {
+  background: #0f9d58;
+  color: white;
+}
+
+.run-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(15, 157, 88, 0.3);
+}
+
+.run-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Inline Code Editor Wrapper */
+.code-editor-wrapper-inline {
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.code-editor-wrapper-inline .code-editor-container {
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+.code-editor-wrapper-inline .code-editor-header {
+  display: none !important; /* Hide CodeEditor's header since we have our own */
+}
+
+.code-editor-wrapper-inline .monaco-editor {
+  border-radius: 0;
+}
+
+.code-editor-wrapper-inline .monaco-editor .monaco-editor-container {
+  border-radius: 0;
+}
+
+/* Code Output Section */
+.code-output {
+  margin-top: 0;
+  border-top: 1px solid #3e3e42;
+  background: #1e1e1e;
+}
+
+.code-output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: #252526;
+  border-top: 1px solid #3e3e42;
+  color: #cccccc;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.close-output-button {
+  background: transparent;
+  border: none;
+  color: #cccccc;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.close-output-button:hover {
+  background: #3e3e42;
+  color: white;
+}
+
+.code-output-content {
+  padding: 16px;
+  margin: 0;
+  color: #d4d4d4;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.code-output-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.code-output-content::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+.code-output-content::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 4px;
+}
+
+.code-output-content::-webkit-scrollbar-thumb:hover {
+  background: #4e4e4e;
+}
+
