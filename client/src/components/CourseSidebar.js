@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CourseSidebar.css';
+import apiConfig from '../config/api';
 
 const CourseSidebar = ({ currentLessonSlug, currentSubtopic, onSubtopicSelect }) => {
   const { courseSlug } = useParams();
@@ -29,7 +30,7 @@ const CourseSidebar = ({ currentLessonSlug, currentSubtopic, onSubtopicSelect })
 
   const fetchCourseData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/courses/${courseSlug}`);
+      const response = await axios.get(`${apiConfig.API_BASE}/courses/${courseSlug}`);
       setCourse(response.data);
       setLessons(response.data.lessons || []);
     } catch (error) {
@@ -44,7 +45,7 @@ const CourseSidebar = ({ currentLessonSlug, currentSubtopic, onSubtopicSelect })
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/courses/${courseSlug}/lessons/${lessonSlug}`
+        `${apiConfig.API_BASE}/courses/${courseSlug}/lessons/${lessonSlug}`
       );
       const structure = parseLessonStructure(response.data.content || '');
       setLessonStructures(prev => ({

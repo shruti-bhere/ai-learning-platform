@@ -13,6 +13,10 @@ const pool = new Pool({
   port: process.env.DB_PORT || 5432,
 });
 
+// Ollama configuration (for logging purposes)
+const OLLAMA_URL = process.env.OLLAMA_URL || (process.env.DB_HOST === 'postgres' ? 'http://ollama:11434' : 'http://localhost:11434');
+const MODEL_NAME = process.env.OLLAMA_MODEL || 'tinyllama';
+
 // Course-specific lesson outlines
 const courseLessonOutlines = {
   java: [

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './AdminDashboard.css';
 import CourseManagement from './CourseManagement';
+import apiConfig from '../config/api';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
@@ -37,7 +38,7 @@ const AdminDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/dashboard');
+      const response = await axios.get(`${apiConfig.API_BASE}/admin/dashboard`);
       setStats(response.data);
       setError(''); // Clear any previous errors
     } catch (err) {
@@ -54,7 +55,7 @@ const AdminDashboard = () => {
   const fetchSessions = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:5000/api/admin/sessions/recent?limit=50'
+        `${apiConfig.API_BASE}/admin/sessions/recent?limit=50`
       );
       setSessions(response.data?.sessions || response.data || []);
     } catch (err) {
@@ -65,7 +66,7 @@ const AdminDashboard = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/courses');
+      const response = await axios.get(`${apiConfig.API_BASE}/courses`);
       const coursesData = Array.isArray(response.data) ? response.data : (response.data?.courses || []);
       setCourses(coursesData);
       setError(''); // Clear any previous errors
@@ -81,7 +82,7 @@ const AdminDashboard = () => {
     setSuccess('');
     setSaving(true);
     try {
-      await axios.post('http://localhost:5000/api/admin/courses', {
+      await axios.post(`${apiConfig.API_BASE}/admin/courses`, {
         name: newCourse.name,
         description: newCourse.description,
         icon: newCourse.icon,
@@ -105,7 +106,7 @@ const AdminDashboard = () => {
     setSuccess('');
     setSaving(true);
     try {
-      await axios.delete(`http://localhost:5000/api/admin/courses/${courseId}`);
+      await axios.delete(`${apiConfig.API_BASE}/admin/courses/${courseId}`);
       setSuccess('Course deleted successfully');
       if (selectedCourseId === String(courseId)) {
         setSelectedCourseId('');
@@ -130,7 +131,7 @@ const AdminDashboard = () => {
     setSaving(true);
     try {
       await axios.post(
-        `http://localhost:5000/api/admin/courses/${selectedCourseId}/lessons`,
+        `${apiConfig.API_BASE}/admin/courses/${selectedCourseId}/lessons`,
         newLesson
       );
       setSuccess('Lesson created successfully');
@@ -162,7 +163,7 @@ const AdminDashboard = () => {
     setSuccess('');
     setSaving(true);
     try {
-      await axios.delete(`http://localhost:5000/api/admin/lessons/${lessonId}`);
+      await axios.delete(`${apiConfig.API_BASE}/admin/lessons/${lessonId}`);
       setSuccess('Lesson deleted successfully');
       await fetchCourses();
     } catch (err) {

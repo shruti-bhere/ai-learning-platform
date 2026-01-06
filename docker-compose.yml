@@ -55,9 +55,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        BACKEND_PORT: ${BACKEND_PORT:-1234}
     container_name: learning-platform-backend
     environment:
-      PORT: 5000
+      PORT: ${BACKEND_PORT:-1234}
       DB_HOST: postgres
       DB_PORT: 5432
       DB_USER: postgres
@@ -70,7 +72,7 @@ services:
       OLLAMA_URL: http://ollama:11434
       OLLAMA_MODEL: tinyllama
     ports:
-      - "5000:5000"
+      - "${BACKEND_PORT:-1234}:${BACKEND_PORT:-1234}"
     depends_on:
       postgres:
         condition: service_healthy
@@ -89,7 +91,7 @@ services:
       dockerfile: Dockerfile.client
     container_name: learning-platform-frontend
     environment:
-      REACT_APP_API_URL: http://localhost:5000
+      REACT_APP_API_URL: http://localhost:${BACKEND_PORT:-1234}
     ports:
       - "3000:3000"
     depends_on:

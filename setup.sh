@@ -6,7 +6,7 @@ echo "Setting up Learning Platform..."
 if [ ! -f server/.env ]; then
     echo "Creating server/.env file..."
     cat > server/.env << EOF
-PORT=5000
+PORT=1234
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres

@@ -53,10 +53,22 @@ const initDatabase = async () => {
         current_streak INTEGER DEFAULT 0,
         longest_streak INTEGER DEFAULT 0,
         last_activity_date DATE,
+        is_admin BOOLEAN DEFAULT FALSE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    // Add is_admin column if it doesn't exist (for existing databases)
+    try {
+      await pool.query(`
+        ALTER TABLE users 
+        ADD COLUMN IF NOT EXISTS is_admin BOOLEAN DEFAULT FALSE
+      `);
+    } catch (err) {
+      // Column might already exist, ignore error
+      console.log('is_admin column may already exist:', err.message);
+    }
 
     await pool.query(`
       CREATE TABLE IF NOT EXISTS user_progress (

@@ -60,12 +60,12 @@ npm run dev
 This will start:
 - PostgreSQL database on port 5432
 - Redis cache on port 6379
-- Backend API on port 5000
+- Backend API on port 1234 (configurable via BACKEND_PORT env var)
 - Frontend on port 3000
 
 3. Access the application:
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
+- Backend API: http://localhost:1234 (or the port set by BACKEND_PORT)
 
 ## Local Development Setup
 
@@ -96,10 +96,21 @@ This will start both backend and frontend concurrently.
 
 ## Environment Variables
 
+### Docker Compose
+The backend port is controlled by the `BACKEND_PORT` environment variable (defaults to 1234). To change it:
+```bash
+BACKEND_PORT=5000 docker-compose up
+```
+Or create a `.env` file in the project root:
+```env
+BACKEND_PORT=5000
+```
+
+### Server Configuration
 Create a `.env` file in the `server` directory:
 
 ```env
-PORT=5000
+PORT=1234
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres
@@ -110,6 +121,8 @@ JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 CLIENT_URL=http://localhost:3000
 ADMIN_EMAIL=admin@example.com
 ```
+
+**Note:** The `PORT` in `server/.env` should match the `BACKEND_PORT` used in docker-compose.yml for consistency.
 
 ## API Endpoints
 

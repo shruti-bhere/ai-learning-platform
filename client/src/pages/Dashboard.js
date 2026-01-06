@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import './Dashboard.css';
+import apiConfig from '../config/api';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -14,7 +15,7 @@ const Dashboard = () => {
 
   const fetchProgress = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/progress');
+      const response = await axios.get(`${apiConfig.API_BASE}/progress`);
       setProgress(response.data);
     } catch (error) {
       console.error('Failed to fetch progress:', error);
@@ -26,7 +27,7 @@ const Dashboard = () => {
   const updateProgress = async (topic, percentage) => {
     try {
       const points = percentage === 100 ? 10 : 0;
-      await axios.post('http://localhost:5000/api/progress/update', {
+      await axios.post(`${apiConfig.API_BASE}/progress/update`, {
         topic,
         progress_percentage: percentage,
         points_earned: points

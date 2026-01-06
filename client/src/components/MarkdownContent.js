@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import CodeEditor from './CodeEditor';
 import './MarkdownContent.css';
+import apiConfig from '../config/api';
 
 const MarkdownContent = ({ content, courseSlug }) => {
   if (!content) return null;
@@ -273,7 +274,7 @@ const CodeBlockWithActions = ({ code: initialCode, language, courseSlug }) => {
     try {
       // axios.defaults.headers.common['Authorization'] is set globally in AuthContext
       const response = await axios.post(
-        'http://localhost:5000/api/execute/code',
+        `${apiConfig.API_BASE}/execute/code`,
         {
           code: code,
           language: getLanguageForExecution()

@@ -10,51 +10,67 @@ const OLLAMA_URL = process.env.OLLAMA_URL || (process.env.DB_HOST === 'postgres'
 const MODEL_NAME = process.env.OLLAMA_MODEL || 'tinyllama';
 
 /**
- * Create the comprehensive instructional design prompt
+ * Create the educational content generation prompt
+ * Focuses on clear, step-by-step, well-structured, beginner-friendly content
  */
 function createInstructionalDesignPrompt(courseName, lessonTitle, topics, difficulty) {
   const topicsList = Array.isArray(topics) ? topics.join(', ') : topics || '';
   
-  return `Act as an expert Instructional Designer and Subject Matter Expert. Your task is to create comprehensive, detailed lesson content for the course titled: ${courseName}.
+  return `You are an educational content generator.
 
-Topic: ${lessonTitle}
+Your task is to create clear, step-by-step, and well-structured educational content about the following topic(s): ${topicsList}
+
 Difficulty Level: ${difficulty}
-Topics to Cover: ${topicsList}
 
-For this topic, please follow this strict structure:
+IMPORTANT: Write content directly about the topic(s). Do NOT mention course names, lesson names, or meta-information about the course structure. Focus purely on explaining the topic itself.
 
-## Learning Objectives
-What will the student learn? Provide 3-5 clear, measurable learning objectives.
+Requirements:
 
-## Concept Explanation
-A deep-dive explanation of the topic in simple, professional language. Make it comprehensive enough for a beginner to understand complex ideas.
+For the topic(s), include:
+- A simple and easy-to-understand explanation
+- At least 2 practical examples
 
-## Real-World Examples
-Provide at least two practical examples to illustrate the concept. Each example should be concrete and relatable.
+If the topic involves programming:
+- Display example code inside a proper code editor-style block
+- Ensure the code is error-free and runnable
+- Use correct formatting and syntax highlighting
 
-## Step-by-Step Breakdown
-If the topic involves a process, explain it stage by stage. Break down complex concepts into manageable steps.
+The content must be:
+- Clean
+- Well-structured
+- Beginner-friendly
+- Easy to read and understand
+- Focused on the topic itself, not on course/lesson structure
 
-## Key Takeaways
-A summary of the most important points from the lesson.
+Avoid unnecessary repetition and keep everything logically organized in one structured flow.
+
+The final output should feel like a professional online learning platform, where users can easily read, understand, and learn from the content.
 
 Formatting Instructions:
-- Use markdown formatting with ## for main headings and ### for subheadings
+- Use markdown formatting with ## for main headings and ### for subsections
 - Use **bold** for emphasis on important terms
 - Use bullet points (-) for lists
-- Only use code blocks (\`\`\`) for actual programming code or technical syntax
-- Do NOT wrap plain text explanations in code blocks
-- Keep the tone educational, encouraging, and clear
-- Provide enough depth so that a beginner can understand complex ideas
-- Avoid surface-level summaries
+- Use numbered lists (1., 2., 3.) for step-by-step instructions
+- ONLY use code blocks (\`\`\`) for actual programming code - NEVER wrap plain text explanations in code blocks
+- Keep paragraphs short (3-4 sentences) for easy reading
+- Use blank lines between sections for visual clarity
 
-Generate the content now:`;
+Writing Style:
+- Write in a clear, conversational tone
+- Use simple language that beginners can understand
+- Explain technical terms when first introduced
+- Break down complex concepts into simple steps
+- Use real-world analogies to make concepts relatable
+- Be encouraging and supportive
+- Focus on the topic content itself - do not reference course names, lesson titles, or learning objectives
+
+Generate the content now. Write directly about ${topicsList} without mentioning course or lesson names:`;
 }
 
 /**
  * Call Ollama API to generate content
  */
-async function callOllamaAPI(prompt, timeoutMs = 180000) { // 3 minutes timeout for comprehensive content
+async function callOllamaAPI(prompt, timeoutMs = 300000) { // 5 minutes timeout for very detailed content
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
   
@@ -71,7 +87,7 @@ async function callOllamaAPI(prompt, timeoutMs = 180000) { // 3 minutes timeout 
         options: {
           temperature: 0.7,
           top_p: 0.9,
-          num_predict: 2500, // Increased for comprehensive content
+          num_predict: 5000, // Increased for extremely detailed, well-structured content
         }
       }),
       signal: controller.signal,
@@ -97,6 +113,71 @@ async function callOllamaAPI(prompt, timeoutMs = 180000) { // 3 minutes timeout 
 }
 
 /**
+ * Remove code blocks that contain plain text (not actual code)
+ * This fixes the common error of wrapping explanations in code blocks
+ */
+function removePlainTextCodeBlocks(content) {
+  // Match code blocks with optional language identifier
+  const codeBlockRegex = /```[\w]*\n([\s\S]*?)```/g;
+  
+  return content.replace(codeBlockRegex, (match, codeContent) => {
+    const trimmed = codeContent.trim();
+    
+    // Check if it's actual code (contains programming syntax indicators)
+    const codeIndicators = [
+      /^(public|private|protected|class|interface|enum|import|package)\s/, // Java keywords
+      /^(def|class|import|from|if|for|while|def)\s/, // Python keywords
+      /^(function|const|let|var|class|import|export)\s/, // JavaScript keywords
+      /^(func|package|import|var|const|type)\s/, // Go keywords
+      /[{}();=<>\[\]]/, // Code punctuation
+      /^\s*(int|String|double|float|boolean|void|return)\s/, // Type declarations
+      /\/\/|\/\*|\*\/|#\s/, // Comments
+    ];
+    
+    // Check if it looks like actual code
+    const looksLikeCode = codeIndicators.some(pattern => pattern.test(trimmed));
+    
+    // Also check if it's mostly code-like (has code structure)
+    const hasCodeStructure = trimmed.includes('{') || trimmed.includes('(') || 
+                            trimmed.includes(';') || trimmed.includes('=') ||
+                            trimmed.match(/^\s*\w+\s*\(/); // Function calls
+    
+    // If it doesn't look like code, remove the code block and return as plain text
+    if (!looksLikeCode && !hasCodeStructure && trimmed.length > 50) {
+      // It's likely plain text wrapped in code block - remove the block markers
+      return trimmed;
+    }
+    
+    // It's actual code, keep the code block
+    return match;
+  });
+}
+
+/**
+ * Clean and format the generated content
+ */
+function cleanGeneratedContent(content) {
+  // Remove code blocks containing plain text
+  content = removePlainTextCodeBlocks(content);
+  
+  // Remove any triple backticks that might be left without proper code
+  // This handles cases where AI wraps explanations in empty or malformed code blocks
+  content = content.replace(/```\s*\n\s*```/g, ''); // Empty code blocks
+  content = content.replace(/```\s*\n([^`\n]+)\n\s*```/g, (match, text) => {
+    // If the content doesn't look like code, remove code block markers
+    if (!text.match(/[{}();=<>\[\]]/) && !text.match(/^\s*(public|private|class|def|function|const|let|var)\s/)) {
+      return text.trim();
+    }
+    return match;
+  });
+  
+  // Clean up extra whitespace
+  content = content.replace(/\n{3,}/g, '\n\n'); // Max 2 newlines
+  
+  return content;
+}
+
+/**
  * Generate comprehensive lesson content
  */
 async function generateLessonContent(courseName, lessonTitle, topics, difficulty = 'beginner') {
@@ -107,10 +188,13 @@ async function generateLessonContent(courseName, lessonTitle, topics, difficulty
     // Clean up the response - remove any extra formatting or artifacts
     let content = response.trim();
     
+    // Remove code block errors (plain text wrapped in code blocks)
+    content = cleanGeneratedContent(content);
+    
     // Ensure the content starts with proper markdown structure
     if (!content.startsWith('#')) {
       // If it doesn't start with a heading, try to find the first heading
-      const firstHeadingIndex = content.search(/^#+\s/);
+      const firstHeadingIndex = content.search(/^#+\s/m);
       if (firstHeadingIndex !== -1) {
         content = content.substring(firstHeadingIndex);
       }

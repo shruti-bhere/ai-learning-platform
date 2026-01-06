@@ -57,8 +57,11 @@ RUN mkdir -p /app/server/temp && \
 WORKDIR /app/server
 RUN npm install --production
 
-# Expose port
-EXPOSE 5000
+# Expose port - actual port is controlled by PORT environment variable set in docker-compose.yml
+# The EXPOSE instruction is informational; the actual port is set via PORT env var from BACKEND_PORT
+# This will be set dynamically by docker-compose.yml based on BACKEND_PORT variable
+ARG BACKEND_PORT=1234
+EXPOSE ${BACKEND_PORT}
 
 # Start server
 CMD ["node", "index.js"]

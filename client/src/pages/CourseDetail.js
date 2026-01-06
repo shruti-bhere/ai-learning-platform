@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CourseDetail.css';
+import apiConfig from '../config/api';
 
 const CourseDetail = () => {
   const { slug } = useParams();
@@ -15,7 +16,7 @@ const CourseDetail = () => {
 
   const fetchCourse = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/courses/${slug}`);
+      const response = await axios.get(`${apiConfig.API_BASE}/courses/${slug}`);
       setCourse(response.data);
     } catch (error) {
       console.error('Failed to fetch course:', error);

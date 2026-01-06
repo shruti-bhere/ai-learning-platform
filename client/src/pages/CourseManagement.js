@@ -4,8 +4,9 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Editor from '@monaco-editor/react';
 import './CourseManagement.css';
+import apiConfig from '../config/api';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = apiConfig.API_BASE;
 
 /**
  * Removes CODE_BLOCK placeholders from lesson content and replaces with actual values
@@ -2357,7 +2358,6 @@ const InteractiveCodeEditor = ({
 
 const ContentEditor = ({ course, topic, subtopic, selectedLesson, onSelect, onNew, form, setForm, onSave, onDelete, saving }) => {
   const [generating, setGenerating] = useState(false);
-  const [generateError, setGenerateError] = useState(null);
   
   // Memoize lessons calculation to prevent repeated recalculations on every render
   const lessons = useMemo(() => {
@@ -2438,7 +2438,6 @@ const ContentEditor = ({ course, topic, subtopic, selectedLesson, onSelect, onNe
     }
 
     setGenerating(true);
-    setGenerateError(null);
 
     try {
       const token = localStorage.getItem('token');
@@ -2467,7 +2466,6 @@ const ContentEditor = ({ course, topic, subtopic, selectedLesson, onSelect, onNe
     } catch (error) {
       console.error('Error generating content:', error);
       const errorMessage = error.response?.data?.error || error.response?.data?.details || error.message || 'Failed to generate content';
-      setGenerateError(errorMessage);
       alert(`Error generating content: ${errorMessage}`);
     } finally {
       setGenerating(false);

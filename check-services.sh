@@ -41,10 +41,12 @@ fi
 
 echo ""
 echo "Checking ports..."
-if lsof -ti:5000 &> /dev/null; then
-    echo "⚠ Port 5000 is in use (backend)"
+# Check backend port (defaults to 1234, can be set via BACKEND_PORT env var)
+BACKEND_PORT=${BACKEND_PORT:-1234}
+if lsof -ti:${BACKEND_PORT} &> /dev/null; then
+    echo "⚠ Port ${BACKEND_PORT} is in use (backend)"
 else
-    echo "✓ Port 5000 is available (backend)"
+    echo "✓ Port ${BACKEND_PORT} is available (backend)"
 fi
 
 if lsof -ti:3000 &> /dev/null; then

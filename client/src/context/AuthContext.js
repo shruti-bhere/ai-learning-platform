@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { io } from 'socket.io-client';
+import apiConfig from '../config/api';
 
 const AuthContext = createContext();
 
@@ -12,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUserProfile = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/user/profile');
+      const response = await axios.get(`${apiConfig.API_BASE}/user/profile`);
       setUser(response.data);
     } catch (error) {
       console.error('Failed to fetch user profile:', error);
@@ -32,7 +33,7 @@ export const AuthProvider = ({ children }) => {
       fetchUserProfile();
       
       // Initialize socket connection for active user tracking
-      const socketConnection = io('http://localhost:5000');
+      const socketConnection = io(apiConfig.BASE_URL);
       setSocket(socketConnection);
       
       return () => {
@@ -66,7 +67,7 @@ export const AuthProvider = ({ children }) => {
         };
       }
 
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${apiConfig.API_BASE}/auth/login`, {
         username: username.trim(),
         password: password
       });
@@ -97,7 +98,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (username, email, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post(`${apiConfig.API_BASE}/auth/register`, {
         username,
         email,
         password
@@ -119,7 +120,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       // Inform backend to close active session (if still authenticated)
-      await axios.post('http://localhost:5000/api/auth/logout');
+      await axios.post(`${apiConfig.API_BASE}/auth/logout`);
     } catch (error) {
       // Ignore errors here; we'll still clear local state
       console.error('Logout tracking error:', error?.response?.data || error.message);

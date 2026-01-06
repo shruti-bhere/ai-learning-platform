@@ -25,7 +25,14 @@ const io = socketIo(server, {
   }
 });
 
-const PORT = process.env.PORT || 5000;
+// PORT is set by docker-compose.yml via BACKEND_PORT environment variable
+// In Docker, this is always set. For local dev, set PORT in your environment or .env file
+const PORT = process.env.PORT;
+if (!PORT) {
+  console.error('ERROR: PORT environment variable is required. Set it in your .env file or environment.');
+  console.error('For Docker: PORT is automatically set by docker-compose.yml from BACKEND_PORT');
+  process.exit(1);
+}
 
 // Middleware
 app.use(cors());

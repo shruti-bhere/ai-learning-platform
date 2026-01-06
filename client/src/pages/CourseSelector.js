@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CourseSelector.css';
+import apiConfig from '../config/api';
 
 const CourseSelector = () => {
   const [courses, setCourses] = useState([]);
@@ -14,7 +15,7 @@ const CourseSelector = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/courses');
+      const response = await axios.get(`${apiConfig.API_BASE}/courses`);
       setCourses(response.data);
     } catch (error) {
       console.error('Failed to fetch courses:', error);

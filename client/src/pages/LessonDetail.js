@@ -4,6 +4,7 @@ import axios from 'axios';
 import MarkdownContent from '../components/MarkdownContent';
 import CourseSidebar from '../components/CourseSidebar';
 import './LessonDetail.css';
+import apiConfig from '../config/api';
 
 const LessonDetail = () => {
   const { courseSlug, lessonSlug } = useParams();
@@ -39,7 +40,7 @@ const LessonDetail = () => {
   const fetchLesson = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/courses/${courseSlug}/lessons/${lessonSlug}`
+        `${apiConfig.API_BASE}/courses/${courseSlug}/lessons/${lessonSlug}`
       );
       setLesson(response.data);
       setCourseName(response.data.course_name || '');
@@ -54,7 +55,7 @@ const LessonDetail = () => {
 
   const updateProgress = async (newProgress) => {
     try {
-      await axios.post(`http://localhost:5000/api/lessons/${lesson.id}/progress`, {
+      await axios.post(`${apiConfig.API_BASE}/lessons/${lesson.id}/progress`, {
         progress_percentage: newProgress,
         completed: newProgress === 100
       });

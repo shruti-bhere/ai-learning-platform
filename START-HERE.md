@@ -29,7 +29,7 @@ npm run dev
 ```
 
 This starts both:
-- Backend server on http://localhost:5000
+- Backend server on http://localhost:1234 (default, configurable via BACKEND_PORT)
 - Frontend on http://localhost:3000
 
 ## Step 4: Open the Application
@@ -63,8 +63,9 @@ The application should now be running. You can:
 - Wait a few seconds for the database to initialize
 
 ### Port already in use
-- Kill the process: `kill -9 $(lsof -ti:3000)` or `kill -9 $(lsof -ti:5000)`
-- Or change ports in the configuration files
+- Kill the process: `kill -9 $(lsof -ti:3000)` or `kill -9 $(lsof -ti:1234)`
+- Or change the backend port: `BACKEND_PORT=5000 docker-compose up` (for Docker)
+- Or update `PORT` in `server/.env` (for local development)
 
 ## 📝 Next Steps
 

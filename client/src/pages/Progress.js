@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './Progress.css';
+import apiConfig from '../config/api';
 
 const Progress = () => {
   const { user } = useAuth();
@@ -16,7 +17,7 @@ const Progress = () => {
 
   const fetchProgress = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/progress');
+      const response = await axios.get(`${apiConfig.API_BASE}/progress`);
       setProgress(response.data);
     } catch (error) {
       console.error('Failed to fetch progress:', error);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Leaderboard.css';
+import apiConfig from '../config/api';
 
 const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -13,7 +14,7 @@ const Leaderboard = () => {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/leaderboard?type=${type}&limit=100`);
+      const response = await axios.get(`${apiConfig.API_BASE}/leaderboard?type=${type}&limit=100`);
       setLeaderboard(response.data?.leaderboard || []);
     } catch (error) {
       console.error('Failed to fetch leaderboard:', error);
